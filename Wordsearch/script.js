@@ -22,6 +22,7 @@ let selectedCells = []; // Stores the currently selected cells
 let foundWords = []; // Stores the words that have been found
 let currentDifficulty = "medium"; // Default difficulty
 let currentTheme = "random"; // Default theme
+let selectionDirection = null; // Tracks the direction of the selection
 
 function showRandomWordSearch() {
     document.getElementById("home").classList.add("hidden");
@@ -202,6 +203,7 @@ function addGridListeners(gridId) {
 function handleMouseDown(event) {
     if (event.target.tagName === 'TD') {
         selectedCells = [];
+        selectionDirection = null; // Reset direction on new selection
         event.target.classList.add('selected');
         selectedCells.push(event.target);
     }
@@ -218,17 +220,54 @@ function handleMouseOver(event) {
             const currentRow = parseInt(currentCell.dataset.row);
             const currentCol = parseInt(currentCell.dataset.col);
 
-            // Check if the current cell is adjacent to the last selected cell
-            const rowDiff = Math.abs(currentRow - lastRow);
-            const colDiff = Math.abs(currentCol - lastCol);
+            const rowDiff = currentRow - lastRow;
+            const colDiff = currentCol - lastCol;
 
-            if ((rowDiff === 1 && colDiff === 0) || // Vertical
-                (rowDiff === 0 && colDiff === 1) || // Horizontal
-                (rowDiff === 1 && colDiff === 1)) { // Diagonal
-                if (!selectedCells.includes(currentCell)) {
-                    currentCell.classList.add('selected');
-                    selectedCells.push(currentCell);
-                }
+            // Determine the direction of the selection
+            if (!selectionDirection) {
+                // Set the direction based on the first move
+                if (rowDiff === 0 && colDiff === 1) selectionDirection = 'right';
+                else if (rowDiff === 0 && colDiff === -1) selectionDirection = 'left';
+                else if (rowDiff === 1 && colDiff === 0) selectionDirection = 'down';
+                else if (rowDiff === -1 && colDiff === 0) selectionDirection = 'up';
+                else if (rowDiff === 1 && colDiff === 1) selectionDirection = 'down-right';
+                else if (rowDiff === 1 && colDiff === -1) selectionDirection = 'down-left';
+                else if (rowDiff === -1 && colDiff === 1) selectionDirection = 'up-right';
+                else if (rowDiff === -1 && colDiff === -1) selectionDirection = 'up-left';
+            }
+
+            // Check if the current cell is in the same direction as the selection
+            let isValid = false;
+            switch (selectionDirection) {
+                case 'right':
+                    isValid = rowDiff === 0 && colDiff === 1;
+                    break;
+                case 'left':
+                    isValid = rowDiff === 0 && colDiff === -1;
+                    break;
+                case 'down':
+                    isValid = rowDiff === 1 && colDiff === 0;
+                    break;
+                case 'up':
+                    isValid = rowDiff === -1 && colDiff === 0;
+                    break;
+                case 'down-right':
+                    isValid = rowDiff === 1 && colDiff === 1;
+                    break;
+                case 'down-left':
+                    isValid = rowDiff === 1 && colDiff === -1;
+                    break;
+                case 'up-right':
+                    isValid = rowDiff === -1 && colDiff === 1;
+                    break;
+                case 'up-left':
+                    isValid = rowDiff === -1 && colDiff === -1;
+                    break;
+            }
+
+            if (isValid && !selectedCells.includes(currentCell)) {
+                currentCell.classList.add('selected');
+                selectedCells.push(currentCell);
             }
         } else {
             currentCell.classList.add('selected');
@@ -241,6 +280,7 @@ function handleMouseUp() {
     checkSelectedCells();
     selectedCells.forEach(cell => cell.classList.remove('selected'));
     selectedCells = [];
+    selectionDirection = null; // Reset direction after selection is complete
 }
 
 function checkSelectedCells() {
@@ -265,6 +305,7 @@ function resetGame() {
     currentWords = [];
     selectedCells = [];
     foundWords = [];
+    selectionDirection = null;
     document.getElementById('randomGrid').innerHTML = '';
     document.getElementById('customGrid').innerHTML = '';
     document.getElementById('randomWordsList').innerHTML = '';
