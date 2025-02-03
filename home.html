@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            color: #333;
+        }
+        .games-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .game-link {
+            display: block;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .game-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select a Game to Play!</h1>
+    <div class="games-list">
+        <a href="wordsearch/index.html" class="game-link">Word Search</a>
+        <a href="sudoku/index.html" class="game-link">Sudoku</a>
+        <!-- Add more game links here as you create them -->
+        <!-- Example: -->
+        <!-- <a href="other-game-1/index.html" class="game-link">Other Game 1</a> -->
+        <!-- <a href="other-game-2/index.html" class="game-link">Other Game 2</a> -->
+    </div>
+</body>
+</html>

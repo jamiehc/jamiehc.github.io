@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Word Search Generator</h1>
+    <div id="home">
+        <h2>Select Difficulty:</h2>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select><br><br>
+        <h2>Select Theme:</h2>
+        <select id="theme">
+            <option value="random">Random Theme</option>
+            <option value="fruits">Fruits</option>
+            <option value="animals">Animals</option>
+            <option value="countries">Countries</option>
+            <option value="sports">Sports</option>
+            <option value="colors">Colors</option>
+        </select><br><br>
+        <button onclick="showRandomWordSearch()">Generate Random Word Search</button>
+        <button onclick="showCustomWordSearch()">Generate Custom Word Search</button>
+    </div>
+
+    <div id="randomWordSearch" class="hidden">
+        <h2>Random Word Search - <span id="selectedDifficulty"></span> - <span id="selectedTheme"></span></h2>
+        <button onclick="generateRandomWordSearch()">Generate New Random Word Search</button>
+        <table id="randomGrid"></table>
+        <h3>Words to Find:</h3>
+        <ul id="randomWordsList"></ul>
+        <button onclick="goBack()">Back to Home</button>
+    </div>
+
+    <div id="customWordSearch" class="hidden">
+        <h2>Custom Word Search</h2>
+        <textarea id="wordInput" placeholder="Enter words separated by commas"></textarea><br>
+        <button onclick="generateCustomWordSearch()">Generate Custom Word Search</button>
+        <table id="customGrid"></table>
+        <h3>Words to Find:</h3>
+        <ul id="customWordsList"></ul>
+        <button onclick="goBack()">Back to Home</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
